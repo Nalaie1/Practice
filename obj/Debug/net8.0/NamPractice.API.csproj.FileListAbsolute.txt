@@ -301,3 +301,4 @@ C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\refint\Na
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.pdb
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.genruntimeconfig.cache
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\ref\NamPractice.API.dll
+C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.sourcelink.json
