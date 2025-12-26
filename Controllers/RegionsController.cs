@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,13 @@ namespace Practice.API.Controllers
     {
         private readonly PracticeDbContext dbContext;
         private readonly IRegionRepository regionRepository;
+        private readonly IMapper mapper;
 
-        public RegionsController(PracticeDbContext dbContext, IRegionRepository regionRepository)
+        public RegionsController(PracticeDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
         {
             this.dbContext = dbContext;
+            this.regionRepository = regionRepository;
+            this.mapper = mapper;
         }
 
         // GET all regions
@@ -29,21 +33,8 @@ namespace Practice.API.Controllers
             //Get data from database - Regions table
             var regionsDomain = await regionRepository.GetAllAsync();
             
-            //Map data from Domain to DTOs if needed
-            var RegionsDto = new List<RegionDto>();
-            foreach (var regionDomain in regionsDomain)
-            {
-                RegionsDto.Add(new RegionDto()
-                {
-                    Id = regionDomain.Id,
-                    Code = regionDomain.Code,
-                    Name = regionDomain.Name,
-                    RegionImageUrl = regionDomain.RegionImageUrl
-                });
-            }
-            
             //Return DTOs
-            return Ok(RegionsDto);
+            return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
         }
 
         // GET region by id
@@ -56,44 +47,24 @@ namespace Practice.API.Controllers
             if (regionDomain == null)
             {
                 return NotFound();
-                
             }
             
             //Map Domain to DTO if needed
-            var RegionDto = new RegionDto()
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
-            
             // Return DTO back to client
-            return Ok(RegionDto);
+            return Ok(mapper.Map<RegionDto>(regionDomain));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             //Map DTO to Domain Model
-            var regionDomain = new Region()
-            {
-                Code = addRegionRequestDto.Code,
-                Name = addRegionRequestDto.Name,
-                RegionImageUrl = addRegionRequestDto.RegionImageUrl
-            };
+            var regionDomain = mapper.Map<Region>(addRegionRequestDto);
             
             //Pass Domain Model to DBContext to save to database
-            await regionRepository.CreateAsync(regionDomain);
+            regionDomain =  await regionRepository.CreateAsync(regionDomain);
             
             //Map Domain Model back to DTO
-            var regionDto = new RegionDto
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
+            var regionDto = mapper.Map<RegionDto>(regionDomain);
             
             //Return DTO back to client
             return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
@@ -110,17 +81,8 @@ namespace Practice.API.Controllers
                 return NotFound();
             }
             
-            //Map Domain to DTO if needed
-            var regionDto = new RegionDto()
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
-            
             //Return deleted region back to client
-            return Ok(regionDto);
+            return Ok(mapper.Map<RegionDto>(regionDomain));
         }
         
         [HttpPut]
@@ -128,31 +90,17 @@ namespace Practice.API.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             //Map DTO to Domain Model
-            var regionDomainModel = new Region()
-            {
-                Code = updateRegionRequestDto.Code,
-                Name = updateRegionRequestDto.Name,
-                RegionImageUrl = updateRegionRequestDto.RegionImageUrl
-            };
+            var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
             
             //Get region from database
-            var  regionDomain = await regionRepository.UpdateAsync(id, regionDomainModel);
-            if (regionDomain == null)
+            regionDomainModel = await regionRepository.UpdateAsync(id, regionDomainModel);
+            if (regionDomainModel == null)
             {
                 return NotFound();
             }
             
-            //Map Domain to DTO if needed
-            var regionDto = new RegionDto()
-            {
-                Id = regionDomain.Id,
-                Code = regionDomain.Code,
-                Name = regionDomain.Name,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
-            
             //Return updated region back to client
-            return Ok(regionDto);
+            return Ok(mapper.Map<RegionDto>(regionDomainModel));
         }
     }
 }

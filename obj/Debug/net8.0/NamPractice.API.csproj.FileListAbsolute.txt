@@ -6,6 +6,7 @@ C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\NamPracti
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\NamPractice.API.dll
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\NamPractice.API.pdb
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\Azure.Core.dll
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\Azure.Identity.dll
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\bin\Debug\net8.0\Humanizer.dll
@@ -287,6 +288,7 @@ C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPracti
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.csproj.CoreCompileInputs.cache
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.sourcelink.json
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\staticwebassets\msbuild.NamPractice.API.Microsoft.AspNetCore.StaticWebAssets.props
@@ -301,4 +303,3 @@ C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\refint\Na
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.pdb
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.genruntimeconfig.cache
 C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\ref\NamPractice.API.dll
-C:\Users\Admin\RiderProjects\Practice\NamPractice.API\obj\Debug\net8.0\NamPractice.API.sourcelink.json
