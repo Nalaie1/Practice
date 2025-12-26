@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NamPractice.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9085346fb20a1062878142578a57354c6b53e80d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+664ca385df6e34bebed80c54fc775fac964086a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("NamPractice.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NamPractice.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

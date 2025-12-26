@@ -35,6 +35,23 @@ namespace Practice.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Difficulties");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6f1c2a9e-3b4d-4f8a-9c2e-1a5b7d8e0f12"),
+                            Name = "Easy"
+                        },
+                        new
+                        {
+                            Id = new Guid("8a3d5c1e-7f4b-4e2a-8d9c-0f1a2b3c4d5e"),
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = new Guid("9b2e4f7a-1c5d-4a8e-b0c3-6d7e8f1a2b34"),
+                            Name = "Hard"
+                        });
                 });
 
             modelBuilder.Entity("NamPractice.API.Models.Domain.Practice", b =>
@@ -77,7 +94,7 @@ namespace Practice.API.Migrations
 
             modelBuilder.Entity("NamPractice.API.Models.Domain.Region", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -92,9 +109,35 @@ namespace Practice.API.Migrations
                     b.Property<string>("RegionImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Regions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a1c3e5f7-2b4d-4a6e-9c8f-0d1e2b3a4c5d"),
+                            Code = "NTH",
+                            Name = "North"
+                        },
+                        new
+                        {
+                            Id = new Guid("b2d4f6a8-1c3e-4b5d-9f0e-7a8c1e2d3f4b"),
+                            Code = "STH",
+                            Name = "South"
+                        },
+                        new
+                        {
+                            Id = new Guid("d6b6a0e7-8b9c-9d0e-3f1a-6b7c8d9e0123"),
+                            Code = "EST",
+                            Name = "East"
+                        },
+                        new
+                        {
+                            Id = new Guid("c3e5a7b9-2d4f-4c6e-8a1b-0f2d3e4c5a6b"),
+                            Code = "WST",
+                            Name = "West"
+                        });
                 });
 
             modelBuilder.Entity("NamPractice.API.Models.Domain.Practice", b =>
