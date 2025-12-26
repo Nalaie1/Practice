@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NamPractice.API.Data;
+using Practice.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<PracticeDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("PracticeConnectionString")));
+
+builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 
 var app = builder.Build();
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NamPractice.API.Data;
 using NamPractice.API.Models.Domain;
 using Practice.API.Models.DTO;
+using Practice.API.Repositories;
 
 namespace Practice.API.Controllers
 {
@@ -13,8 +14,9 @@ namespace Practice.API.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly PracticeDbContext dbContext;
+        private readonly IRegionRepository regionRepository;
 
-        public RegionsController(PracticeDbContext dbContext)
+        public RegionsController(PracticeDbContext dbContext, IRegionRepository regionRepository)
         {
             this.dbContext = dbContext;
         }
@@ -25,7 +27,7 @@ namespace Practice.API.Controllers
         public async Task <IActionResult> GetAllRegions()
         {
             //Get data from database - Regions table
-            var regionsDomain = await dbContext.Regions.ToListAsync();
+            var regionsDomain = await regionRepository.GetAllAsync();
             
             //Map data from Domain to DTOs if needed
             var RegionsDto = new List<RegionDto>();
@@ -48,9 +50,9 @@ namespace Practice.API.Controllers
         // GET: https://localhost:portnumber/api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        public async Task <IActionResult> GetRegionById([FromRoute]Guid id)
+        public async Task <IActionResult> GetById([FromRoute]Guid id)
         {
-            var regionDomain = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            var regionDomain = await regionRepository.GetIdAsync(id);
             if (regionDomain == null)
             {
                 return NotFound();
@@ -71,7 +73,7 @@ namespace Practice.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto addRegionRequestDto)
+        public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             //Map DTO to Domain Model
             var regionDomain = new Region()
@@ -82,8 +84,7 @@ namespace Practice.API.Controllers
             };
             
             //Pass Domain Model to DBContext to save to database
-            await dbContext.Regions.AddAsync(regionDomain);
-            dbContext.SaveChangesAsync();
+            await regionRepository.CreateAsync(regionDomain);
             
             //Map Domain Model back to DTO
             var regionDto = new RegionDto
@@ -95,23 +96,19 @@ namespace Practice.API.Controllers
             };
             
             //Return DTO back to client
-            return CreatedAtAction(nameof(GetRegionById), new { id = regionDto.Id }, regionDto);
+            return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
         }
         
         [HttpDelete]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> DeleteRegion([FromRoute] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             //Get region from database
-            var regionDomain = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            var regionDomain = await regionRepository.DeleteAsync(id);
             if (regionDomain == null)
             {
                 return NotFound();
             }
-            
-            //Remove region
-            dbContext.Regions.Remove(regionDomain);
-            await dbContext.SaveChangesAsync();
             
             //Map Domain to DTO if needed
             var regionDto = new RegionDto()
@@ -128,20 +125,22 @@ namespace Practice.API.Controllers
         
         [HttpPut]
         [Route("{id:Guid}")]
-        public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
+            //Map DTO to Domain Model
+            var regionDomainModel = new Region()
+            {
+                Code = updateRegionRequestDto.Code,
+                Name = updateRegionRequestDto.Name,
+                RegionImageUrl = updateRegionRequestDto.RegionImageUrl
+            };
+            
             //Get region from database
-            var regionDomain = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            var  regionDomain = await regionRepository.UpdateAsync(id, regionDomainModel);
             if (regionDomain == null)
             {
                 return NotFound();
             }
-            
-            //Update region details
-            regionDomain.Name = updateRegionRequestDto.Name;
-            regionDomain.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
-            
-            dbContext.SaveChangesAsync();
             
             //Map Domain to DTO if needed
             var regionDto = new RegionDto()
