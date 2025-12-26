@@ -96,5 +96,63 @@ namespace Practice.API.Controllers
             //Return DTO back to client
             return CreatedAtAction(nameof(GetRegionById), new { id = regionDto.Id }, regionDto);
         }
+        
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public IActionResult DeleteRegion([FromRoute] Guid id)
+        {
+            //Get region from database
+            var regionDomain = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            if (regionDomain == null)
+            {
+                return NotFound();
+            }
+            
+            //Remove region
+            dbContext.Regions.Remove(regionDomain);
+            dbContext.SaveChanges();
+            
+            //Map Domain to DTO if needed
+            var regionDto = new RegionDto()
+            {
+                Id = regionDomain.Id,
+                Code = regionDomain.Code,
+                Name = regionDomain.Name,
+                RegionImageUrl = regionDomain.RegionImageUrl
+            };
+            
+            //Return deleted region back to client
+            return Ok(regionDto);
+        }
+        
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public IActionResult UpdateRegion([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
+        {
+            //Get region from database
+            var regionDomain = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+            if (regionDomain == null)
+            {
+                return NotFound();
+            }
+            
+            //Update region details
+            regionDomain.Name = updateRegionRequestDto.Name;
+            regionDomain.RegionImageUrl = updateRegionRequestDto.RegionImageUrl;
+            
+            dbContext.SaveChanges();
+            
+            //Map Domain to DTO if needed
+            var regionDto = new RegionDto()
+            {
+                Id = regionDomain.Id,
+                Code = regionDomain.Code,
+                Name = regionDomain.Name,
+                RegionImageUrl = regionDomain.RegionImageUrl
+            };
+            
+            //Return updated region back to client
+            return Ok(regionDto);
+        }
     }
 }
